@@ -1,15 +1,38 @@
 import { useParams } from "react-router-dom";
 import Webcam from "react-webcam";
-import { useAccel } from "../hooks/sensors";
-import { useEffect } from "react";
+import { getAccelPermission } from "../util/sensors";
+import { useEffect, useState } from "react";
 
 const CaptureCorner = () => {
   const { id } = useParams();
-  const accel = useAccel();
+  const [accel, setAccel] = useState()
 
   useEffect(() => {
-    console.log(accel)
-  }, [accel])
+
+    getAccelPermission().then((res) => {
+      if (res.state === "granted") {
+        // @ts-expect-error object exists in JS Web API
+        const acl = new Accelerometer({ frequency: 60 });
+
+        const handleReading = () => {
+          setAccel(acl)
+          console.log(`Acceleration along the X-axis ${acl.x}`);
+          console.log(`Acceleration along the Y-axis ${acl.y}`);
+          console.log(`Acceleration along the Z-axis ${acl.z}`);
+        }
+
+        acl.addEventListener("reading", handleReading);
+
+        acl.start();
+
+        return () => {
+          acl.removeEventListenenr("reading", handleReading)
+        }
+      } else {
+        setAccel(null)
+      }
+    })
+  }, [])
 
   const size = {height: window.innerHeight, width: window.innerWidth}
 
