@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home.tsx'
 import RoleSelector from './pages/Role_Selector.tsx';
+import SignIn from './pages/SignIn_Page.tsx';
 import './index.css'
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/select-role",
     element: <RoleSelector />,
+  },
+  {
+    path: "/sign-in",
+    element: <SignIn />,
   },
   
 ]);
