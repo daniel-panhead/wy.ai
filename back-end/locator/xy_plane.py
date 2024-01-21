@@ -3,8 +3,8 @@ import math
 x_length = 140
 y_length = 58
 
-x_axis_upper = 70
-y_axis_upper = 29
+x_axis_upper = x_length / 2
+y_axis_upper = y_length / 2
 
 def q2_xaxis_length(q1, q2):
     q2_length = (q2**2 - q1**2 + x_length**2) / (2 * x_length)
@@ -57,3 +57,14 @@ y2_coordinate = y_coord(test2_lengthyaxis)
 
 print(x2_coordinate)
 print(y2_coordinate)
+
+# q1, q2, q4 = 119, 54, 110
+
+test3_lengthxaxis = q2_xaxis_length(119, 54)
+test3_lengthyaxis = q1_yaxis_length(119, 110)
+
+x3_coordinate = x_coord(test3_lengthxaxis)
+y3_coordinate = y_coord(test3_lengthyaxis)
+
+print(x3_coordinate)
+print(y3_coordinate)
