@@ -1,7 +1,7 @@
 import Logo from '../assets/logo.svg'
 import Dropdown from '../components/Dropdown'
 import { useEffect, useState } from 'react'
-import { Accelerometer } from '../sensors/motion-sensors'
+// import { Accelerometer } from '../sensors/motion-sensors'
 
 const Home = () => {
   const [accelPerm, setAccelPerm] = useState<PermissionStatus>()
