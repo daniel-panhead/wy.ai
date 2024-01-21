@@ -34,33 +34,33 @@ export const useAccel = () => {
   return accel
 }
 
-export const useMagnet = () => {
-  const [magnet, setMagnet] = useState<{ x: number, y: number, z: number } | null>()
+// export const useMagnet = () => {
+//   const [magnet, setMagnet] = useState<{ x: number, y: number, z: number } | null>()
 
-  useEffect(() => {
-    getAccelPermission().then((res) => {
-      if (res.state === "granted") {
-        const acl = new Magnetometer({ frequency: 60 });
+//   useEffect(() => {
+//     getAccelPermission().then((res) => {
+//       if (res.state === "granted") {
+//         const acl = new Magnetometer({ frequency: 60 });
 
-        const handleReading = () => {
-          setMagnet({ x: acl.x, y: acl.y, z: acl.z })
-        }
+//         const handleReading = () => {
+//           setMagnet({ x: acl.x, y: acl.y, z: acl.z })
+//         }
 
-        acl.addEventListener("reading", handleReading);
+//         acl.addEventListener("reading", handleReading);
 
-        acl.start();
+//         acl.start();
 
-        return () => {
-          acl.removeEventListener("reading", handleReading)
-        }
-      } else {
-        setMagnet(null)
-      }
-    })
-  }, [])
+//         return () => {
+//           acl.removeEventListener("reading", handleReading)
+//         }
+//       } else {
+//         setMagnet(null)
+//       }
+//     })
+//   }, [])
 
-  return magnet
-}
+//   return magnet
+// }
 
 export const useAhrs = () => {
   const [eulerAngles, setEulerAngles] = useState<{ heading: number; pitch: number; roll: number; }>()
@@ -121,7 +121,7 @@ export const useAhrs = () => {
         
         const gAcl = new Gyroscope({ frequency: 20 })
         const aAcl = new Accelerometer({ frequency: 20 })
-        const mAcl = new Magnetometer({ frequency: 20 })
+        const mAcl = new Magnetometer({ frequency: 10 })
         
         addEventListener("reading", makeReadingHandler(setGData, gAcl));
         addEventListener("reading", makeReadingHandler(setAData, aAcl));
@@ -131,7 +131,8 @@ export const useAhrs = () => {
   })
 
   useEffect(() => {
-    if (!madgwick || gData.length == 0 || aData.length == 0 || mData.length == 0) return
+    if (!madgwick || gData.length == 0 || aData.length == 0) return
+    console.log(gData)
     madgwick.update(...gData, ...aData, ...mData)
     setEulerAngles(madgwick.getEulerAngles())
   }, [madgwick, gData, aData, mData])
