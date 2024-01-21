@@ -14,12 +14,13 @@ const Guiding = () => {
       <div className="absolute z-10 w-full p-6 opacity-60">
         <div className="flex flex-col items-center gap-2">
           <span className="font-extrabold text-light-light-green text-center text-lg">NAVIGATE TO YOUR FRIEND!</span>
-          <span className="font-extrabold text-light-light-green text-center text-lg">heading: {ahrs ? ahrs.heading.toFixed(2) : ''}</span>
-          <span className="font-extrabold text-light-light-green text-center text-lg">pitch: {ahrs ? ahrs.pitch.toFixed(2) : ''}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">heading: {ahrs ? (ahrs.heading * (180 / Math.PI)).toFixed(2) : ''}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">pitch: {ahrs ? (ahrs.pitch * (180 / Math.PI)).toFixed(2) : ''}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">roll: {ahrs ? (ahrs.roll * (180 / Math.PI)).toFixed(2) : ''}</span>
 
         </div>
       </div>
-      <Webcam width={size.width} height={size.height} videoConstraints={{ aspectRatio: ratio }} />
+      {/* <Webcam width={size.width} height={size.height} videoConstraints={{ aspectRatio: ratio }} /> */}
       <div className="absolute w-full bottom-14">
         <div className="flex flex-col justify-center w-full px-8 text-light-light-green">
           <span className="text-4xl font-semibold">10 FT AWAY</span>

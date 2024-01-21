@@ -143,10 +143,7 @@ export const useAhrs = () => {
           const aAcl = new Accelerometer({ frequency: 10 })
           const mAcl = new Magnetometer({ frequency: 10 })
 
-          const gReadHandler = makeReadingHandler(arr => {
-            console.log(arr)  
-            setGData(arr)
-          }, gAcl)
+          const gReadHandler = makeReadingHandler(setGData, gAcl)
           const aReadHandler = makeReadingHandler(arr => setAData(arr.map(el => el / 9.81)), aAcl)
           const mReadHandler = makeReadingHandler(setMData, mAcl)
           
@@ -170,8 +167,8 @@ export const useAhrs = () => {
   }, [])
 
   useEffect(() => {
-    console.log(gData)
     if (!madgwick || gData.length == 0 || aData.length == 0) return
+    console.log(gData)
     madgwick.update(...gData, ...aData, ...mData)
     setEulerAngles(madgwick.getEulerAngles())
   }, [madgwick, gData, aData, mData])
