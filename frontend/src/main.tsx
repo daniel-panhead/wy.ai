@@ -7,7 +7,6 @@ import {
 import Home from './pages/Home.tsx'
 import RoleSelector from './pages/Role_Selector.tsx';
 import SignIn from './pages/SignIn_Page.tsx';
-import Camera from './pages/Camera.tsx'
 import './index.css'
 import CaptureCorner from './pages/CaptureCorner.tsx';
 
@@ -28,11 +27,6 @@ const router = createBrowserRouter([
     path: "/sign-in",
     element: <SignIn />,
   },
-  {
-    path: "/capture-corner",
-    element: <Camera />,
-  },
-  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

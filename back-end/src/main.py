@@ -3,6 +3,7 @@ from locator import xy_plane as plane
 from locator import base_distance
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 class Angle(BaseModel):
@@ -11,6 +12,20 @@ class Angle(BaseModel):
     angles: list
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "https://localhost:5173",
+    "https://wyai.netlify.app/"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 @app.get("/")
 def Home():
@@ -23,7 +38,6 @@ def greetings():
 
 @app.post("/coords")
 async def coords(angles: Angle):
-
     d1 = base_distance.base_distance(angles.angles[0])
     d2 = base_distance.base_distance(angles.angles[1])
     d3 = base_distance.base_distance(angles.angles[2])
