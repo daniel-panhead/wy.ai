@@ -15,7 +15,8 @@ export default {
         "cambridge-blue": "#A0BBA4",
         "element-bg": "#FFFEF6",
         "dark-grey": "#424242",
-        "ash-grey": "#C2D6C6"
+        "ash-grey": "#C2D6C6",
+        "ash-grey-lite": "#D3DDD5"
       }
     },
   },
