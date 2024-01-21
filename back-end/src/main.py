@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 class Angle(BaseModel):
     room: str
+    role : str
     angles: list
 
 app = FastAPI()
@@ -29,5 +30,5 @@ async def coords(angles: Angle):
     lengthx = plane.q2_xaxis_length(d1,d2)
     lengthy = plane.q1_yaxis_length(d1,d3)
 
-    return {"room" : angles.room, "x" : plane.x_coord(lengthx), "y" : plane.y_coord(lengthy)}
+    return {"room" : angles.room, "role" : angles.role, "x" : plane.x_coord(lengthx), "y" : plane.y_coord(lengthy)}
 
