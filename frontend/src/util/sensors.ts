@@ -98,7 +98,7 @@ export const useAhrs = () => {
             *
             * Default: 20
             */
-            sampleInterval: 10,
+            sampleInterval: 60,
 
             /*
             * Choose from the `Madgwick` or `Mahony` filter.
@@ -139,8 +139,8 @@ export const useAhrs = () => {
             }
           }
           
-          const gAcl = new Gyroscope({ frequency: 10 })
-          const aAcl = new Accelerometer({ frequency: 10 })
+          const gAcl = new Gyroscope({ frequency: 60 })
+          const aAcl = new Accelerometer({ frequency: 60 })
           const mAcl = new Magnetometer({ frequency: 10 })
 
           const gReadHandler = makeReadingHandler(setGData, gAcl)
