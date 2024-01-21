@@ -18,9 +18,9 @@ const Dropdown = ({children}) => {
   const [active, setActive] = useState(false)
   const navigate = useNavigate()
   return (
-    <div className="gap-0">
+    <div className="gap-0 flex flex-col">
       <div
-        className="relative z-10 flex items-center justify-center gap-4 bg-cambridge-blue border-sea-green border-2 px-6 py-4 rounded-2xl drop-shadow-xl"
+        className="relative z-10 flex items-center w-[280px] justify-center gap-4 bg-cambridge-blue border-sea-green border-2 px-6 py-4 rounded-2xl drop-shadow-xl"
         onClick={() => {setActive((prev) => !prev)}}  
       >
         <span>{children}</span>
