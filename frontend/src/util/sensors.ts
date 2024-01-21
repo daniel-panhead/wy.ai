@@ -88,13 +88,14 @@ export const useAhrs = () => {
   useEffect(() => {
     getAccelMagnetPermission().then((res) => {
       if (res.state === "granted") {
+        console.log("granted")
         const madgwick = new AHRS({
           /*
            * The sample interval, in Hz.
            *
            * Default: 20
            */
-          sampleInterval: 20,
+          sampleInterval: 10,
 
           /*
            * Choose from the `Madgwick` or `Mahony` filter.
@@ -136,18 +137,20 @@ export const useAhrs = () => {
           }
         }
         
-        const gAcl = new Gyroscope({ frequency: 20 })
-        const aAcl = new Accelerometer({ frequency: 20 })
+        const gAcl = new Gyroscope({ frequency: 10 })
+        const aAcl = new Accelerometer({ frequency: 10 })
         const mAcl = new Magnetometer({ frequency: 10 })
         
         addEventListener("reading", makeReadingHandler(setGData, gAcl));
         addEventListener("reading", makeReadingHandler(setAData, aAcl));
         addEventListener("reading", makeReadingHandler(setMData, mAcl));
+        console.log("done init")
       }
     })
   }, [])
 
   useEffect(() => {
+    console.log(gData)
     if (!madgwick || gData.length == 0 || aData.length == 0) return
     madgwick.update(...gData, ...aData, ...mData)
     setEulerAngles(madgwick.getEulerAngles())
