@@ -27,7 +27,7 @@ const Guiding = () => {
       <div className="absolute w-full bottom-14">
         <div className="flex flex-col justify-center w-full px-8 text-light-light-green">
           <span className="text-4xl font-semibold">10 FT AWAY</span>
-          <span className="text-xl font-medium">{Math.abs(diff - 5) < 0 ? "Go straight" : `Turn ${Math.abs(diff).toFixed(2)} deg ${diff > 0 ? 'left' : 'right'}`}</span>
+          <span className="text-xl font-medium">{Math.abs(diff) < 5 ? "Go straight" : `Turn ${Math.abs(diff).toFixed(2)} deg ${diff > 0 ? 'left' : 'right'}`}</span>
         </div>
       </div>
       <div className="absolute left-[50%] -ml-3 top-[50%] -mt-3 bg-white rounded-full w-6 h-6 opacity-40 animate-pulse"></div>
