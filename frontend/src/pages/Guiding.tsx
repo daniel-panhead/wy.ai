@@ -20,7 +20,7 @@ const Guiding = () => {
 
         </div>
       </div>
-      {/* <Webcam width={size.width} height={size.height} videoConstraints={{ aspectRatio: ratio }} /> */}
+      <Webcam width={size.width} height={size.height} videoConstraints={{ aspectRatio: ratio }} />
       <div className="absolute w-full bottom-14">
         <div className="flex flex-col justify-center w-full px-8 text-light-light-green">
           <span className="text-4xl font-semibold">10 FT AWAY</span>

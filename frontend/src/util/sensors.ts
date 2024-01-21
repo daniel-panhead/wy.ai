@@ -51,28 +51,6 @@ export const useAccel = () => {
   return accel
 }
 
-
-const smooth = (values: number[], alpha) => {
-  const weighted = average(values) * alpha;
-  let smoothed: number[] = [];
-  for (const i of values) {
-    const curr = values[i];
-    const prev = smoothed[i - 1] || values[values.length - 1];
-    const next = curr || values[0];
-    const improved = Number(average([weighted, prev, curr, next]).toFixed(2));
-    smoothed.push(improved);
-  }
-  return smoothed;
-}
-
-const average = (data) => {
-  const sum = data.reduce(function (sum, value) {
-    return sum + value;
-  }, 0);
-  const avg = sum / data.length;
-  return avg;
-}
-
 export const useAhrs = () => {
   const permsGranted = useRef(false)
   const [eulerAngles, setEulerAngles] = useState<{ heading: number; pitch: number; roll: number; }>()
@@ -167,9 +145,9 @@ export const useAhrs = () => {
   useEffect(() => {
     if (!madgwick || gData[0].length < 6 || aData[0].length < 6) return
 
-    const avgG = gData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
-    const avgA = aData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
-    const avgM = mData[0].length === 0 ? [] : mData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
+    const avgG = gData.map((axisArr) => axisArr.reduce((prev, curr) => prev += curr) / axisArr.length)
+    const avgA = aData.map((axisArr) => axisArr.reduce((prev, curr) => prev += curr) / axisArr.length)
+    const avgM = mData[0].length === 0 ? [] : mData.map((axisArr) => axisArr.reduce((prev, curr) => prev += curr) / axisArr.length)
     // @ts-expect-error it's fine
     madgwick.update(...avgG, ...avgA, ...avgM)
     setEulerAngles(madgwick.getEulerAngles())
