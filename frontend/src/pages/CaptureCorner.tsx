@@ -15,7 +15,7 @@ const CaptureCorner = () => {
         const acl = new Accelerometer({ frequency: 60 });
 
         const handleReading = () => {
-          setAccel(acl)
+          setAccel((prev) => acl)
           console.log(`Acceleration along the X-axis ${acl.x}`);
           console.log(`Acceleration along the Y-axis ${acl.y}`);
           console.log(`Acceleration along the Z-axis ${acl.z}`);
