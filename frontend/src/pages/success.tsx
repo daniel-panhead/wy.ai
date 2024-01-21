@@ -1,4 +1,4 @@
-import Logo from '../assets/Screenshot 2024-01-21 at 10.32.15.png'
+import Logo from '../assets/blushed_cat.png'
 import Button from '../components/Button'
 
 const Success = () => {
