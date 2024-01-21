@@ -141,7 +141,7 @@ export const useAhrs = () => {
           }
           
           // const gAcl = new Gyroscope({ frequency: 10 })
-          const aAcl = new Accelerometer({ frequency: 60 })
+          const aAcl = new Accelerometer({ frequency: 10 })
           // const mAcl = new Magnetometer({ frequency: 10 })
 
           // const gReadHandler = makeReadingHandler(setGData, gAcl)
@@ -149,7 +149,7 @@ export const useAhrs = () => {
           // const mReadHandler = makeReadingHandler(setMData, mAcl)
           
           // addEventListener("reading", gReadHandler);
-          addEventListener("reading", () => {
+          aAcl.addEventListener("reading", () => {
             console.log(aAcl)
             setAData({ x: aAcl.x, y: aAcl.y, z: aAcl.z })
           });
