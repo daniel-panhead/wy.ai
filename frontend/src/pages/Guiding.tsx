@@ -15,7 +15,7 @@ const Guiding = () => {
         <div className="flex flex-col items-center gap-2">
           <span className="font-extrabold text-light-light-green text-center text-lg">NAVIGATE TO YOUR FRIEND!</span>
           <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? magnet.x.toFixed(2) : ''} {magnet ? magnet.y.toFixed(2) : ''} {magnet ? magnet.z.toFixed(2) : ''}</span>
-          <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? Math.atan2(magnet.y, magnet.x) : ''}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? (Math.atan2(magnet.y, magnet.x) * (180/Math.PI)).toFixed(2) : ''}</span>
 
         </div>
       </div>
