@@ -1,38 +1,11 @@
 import { useParams } from "react-router-dom";
 import Webcam from "react-webcam";
-import { getAccelPermission } from "../util/sensors";
-import { useEffect, useState } from "react";
+import { useAccel } from "../util/sensors";
+import { useEffect } from "react";
 
 const CaptureCorner = () => {
   const { id } = useParams();
-  const [accel, setAccel] = useState<{ x: number, y: number, z: number }|null>()
-
-  useEffect(() => {
-
-    getAccelPermission().then((res) => {
-      if (res.state === "granted") {
-        const acl = new Accelerometer({ frequency: 60 });
-
-        const handleReading = () => {
-          setAccel({x: acl.x, y: acl.y, z: acl.z})
-
-          // console.log(`Acceleration along the X-axis ${acl.x}`);
-          // console.log(`Acceleration along the Y-axis ${acl.y}`);
-          // console.log(`Acceleration along the Z-axis ${acl.z}`);
-        }
-
-        acl.addEventListener("reading", handleReading);
-
-        acl.start();
-
-        return () => {
-          acl.removeEventListener("reading", handleReading)
-        }
-      } else {
-        setAccel(null)
-      }
-    })
-  }, [])
+  const accel = useAccel();
 
   useEffect(() => {
     console.log(accel)
@@ -50,7 +23,7 @@ const CaptureCorner = () => {
         <div className="flex flex-col items-center gap-2">
           <span className="font-extrabold text-light-light-green text-center text-lg">CAPTURE CORNER {id}</span>
           <span className="text-center text-light-light-green text-lg">Line up the corner with the glowing dot in the center!</span>
-          <span className="text-center text-light-light-green text-lg font-semibold">{accel ? accel.x.toFixed(2) : ''} {accel ? accel.y.toFixed(2) : ''} {accel ? accel.z.toFixed(2) : ''}</span>
+          <span className="text-center text-light-light-green text-lg font-semibold">{accel ? accel.z.toFixed(2) : ''}</span>
         </div>
       </div>
       <Webcam width={size.width} height={size.height} videoConstraints={{aspectRatio: ratio}} />
