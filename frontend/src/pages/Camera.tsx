@@ -7,7 +7,7 @@ const findDistance = async () => {
         strAngles[i] = parseFloat(strAngles[i])
     }
 
-    let res = await fetch("http://localhost:60906/coords", {
+    let res = await fetch("http://localhost:8000/coords", {
         method : "POST",
         body : JSON.stringify({
             role : sessionStorage.getItem("role"),
@@ -18,13 +18,16 @@ const findDistance = async () => {
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-    console.log(res.json)
+
+    console.log(await res.json())
 }
 
 const Camera = () => {
     sessionStorage.setItem('role', "parent")
     sessionStorage.setItem('room', "West Wing")
     sessionStorage.setItem('angles', JSON.stringify([45, 23, 12]))
+    findDistance()
+
     return(
         <div onClick={findDistance}>
             CAMERA
