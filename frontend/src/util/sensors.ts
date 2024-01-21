@@ -131,8 +131,10 @@ export const useAhrs = () => {
   })
 
   useEffect(() => {
-    if (!madgwick || gData.length == 0 || aData.length == 0) return
     console.log(gData)
+    console.log(aData)
+    console.log(mData)
+    if (!madgwick || gData.length == 0 || aData.length == 0) return
     madgwick.update(...gData, ...aData, ...mData)
     setEulerAngles(madgwick.getEulerAngles())
   }, [madgwick, gData, aData, mData])
