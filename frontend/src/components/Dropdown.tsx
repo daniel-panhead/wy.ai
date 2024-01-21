@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const roomsList = [
   {
@@ -13,12 +14,16 @@ const roomsList = [
 
 const Dropdown = ({children}) => {
   const [active, setActive] = useState(false)
+  const actionHandler = () => {setActive((prev) => !prev); 
+    const navigate = useNavigate();
+    navigate("/select-role");
+}
 
   return (
     <div className="gap-0">
       <div
         className="relative z-10 flex items-center justify-center gap-4 bg-cambridge-blue border-sea-green border-2 px-6 py-4 rounded-2xl drop-shadow-xl"
-        onClick={() => setActive((prev) => !prev)}  
+        onClick={actionHandler}  
       >
         <span>{children}</span>
         <svg width="24" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
