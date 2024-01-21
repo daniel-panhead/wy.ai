@@ -1,4 +1,4 @@
-import Logo from '../assets/success_cat.svg'
+import Logo from '../assets/blushed_cat.png'
 import Button from '../components/Button'
 
 const Success = () => {
