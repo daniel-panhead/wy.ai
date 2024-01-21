@@ -14,7 +14,7 @@ const findDistance = async () => {
       floatAngles.push(parseFloat(sessionStorage.getItem(String(i))))
     }
 
-    let res = await fetch("https://back-end-n6tj6r67ea-uw.a.run.app", {
+    let res = await fetch("http://localhost:8000/coords", {
         method : "POST",
         mode : "cors",
         body : JSON.stringify({
@@ -33,7 +33,7 @@ const findDistance = async () => {
 }
 
 const test =async () => {
-  let res = await fetch("https://back-end-n6tj6r67ea-uw.a.run.app") 
+  let res = await fetch("http://localhost:8000/") 
   console.log(await res.json())
 }
 
