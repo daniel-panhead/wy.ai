@@ -143,8 +143,11 @@ export const useAhrs = () => {
           const aAcl = new Accelerometer({ frequency: 10 })
           const mAcl = new Magnetometer({ frequency: 10 })
 
-          const gReadHandler = makeReadingHandler(setGData, gAcl)
-          const aReadHandler = makeReadingHandler(setAData, aAcl)
+          const gReadHandler = makeReadingHandler(arr => {
+            console.log(arr)  
+            setGData(arr)
+          }, gAcl)
+          const aReadHandler = makeReadingHandler(arr => setAData(arr.map(el => el / 9.81)), aAcl)
           const mReadHandler = makeReadingHandler(setMData, mAcl)
           
           gAcl.addEventListener("reading", gReadHandler);
