@@ -141,7 +141,7 @@ export const useAhrs = () => {
           }
           
           // const gAcl = new Gyroscope({ frequency: 10 })
-          const aAcl = new Accelerometer({ frequency: 10 })
+          const aAcl = new Accelerometer({ frequency: 60 })
           // const mAcl = new Magnetometer({ frequency: 10 })
 
           // const gReadHandler = makeReadingHandler(setGData, gAcl)
