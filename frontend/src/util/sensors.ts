@@ -84,7 +84,7 @@ export const useAhrs = () => {
   // const [eulerAngles, setEulerAngles] = useState<{ heading: number; pitch: number; roll: number; }>()
   // const [madgwick, setMadgwick] = useState<AHRS>()
   // const [gData, setGData] = useState<[number, number, number] | []>([])
-  const [aData, setAData] = useState<[number, number, number] | []>([])
+  const [aData, setAData] = useState({x: 0, y: 0, z: 0})
   // const [mData, setMData] = useState<[number, number, number] | []>([])
 
   useEffect(() => {
@@ -137,7 +137,7 @@ export const useAhrs = () => {
           const makeReadingHandler = (setData, acl: Gyroscope|Accelerometer|Magnetometer) => {
             return () => {
               console.log(acl)
-              setData([acl.x, acl.y, acl.z])
+              setData({x: acl.x, y: acl.y, z: acl.z})
             }
           }
           
@@ -150,7 +150,10 @@ export const useAhrs = () => {
           // const mReadHandler = makeReadingHandler(setMData, mAcl)
           
           // addEventListener("reading", gReadHandler);
-          addEventListener("reading", aReadHandler);
+          addEventListener("reading", () => {
+            console.log(aAcl)
+            setAData({ x: aAcl.x, y: aAcl.y, z: aAcl.z })
+          });
           // addEventListener("reading", mReadHandler);
 
           // gAcl.start()
@@ -160,10 +163,7 @@ export const useAhrs = () => {
 
           return () => {
             // removeEventListener("reading", gReadHandler);
-            removeEventListener("reading", () => {
-              console.log(aAcl)
-              setAData([aAcl.x, aAcl.y, aAcl.z])
-            });
+            removeEventListener("reading", aReadHandler);
             // removeEventListener("reading", mReadHandler);
           }
         }
