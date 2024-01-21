@@ -39,6 +39,7 @@ const Home = () => {
   return (
     <div className='flex flex-col p-8 items-center gap-4'>
       <img src={Logo} alt="" className='w-1/2' />
+      <p>{accelPerm.state}</p>
       <p>
         x: {accels.x}
         <br />
