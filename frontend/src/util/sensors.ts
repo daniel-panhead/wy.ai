@@ -165,7 +165,6 @@ export const useAhrs = () => {
   }, [])
 
   useEffect(() => {
-    console.log(gData)
     if (!madgwick || gData[0].length < 10 || aData[0].length < 10) return
 
     const avgG = gData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
@@ -173,7 +172,12 @@ export const useAhrs = () => {
     const avgM = mData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
     // @ts-expect-error it's fine
     madgwick.update(...avgG, ...avgA, ...avgM)
+    console.log(madgwick.getEulerAngles())
     setEulerAngles(madgwick.getEulerAngles())
+
+    setGData([[], [], []])
+    setAData([[], [], []])
+    setMData([[], [], []])
   }, [madgwick, gData, aData, mData])
 
   return eulerAngles
