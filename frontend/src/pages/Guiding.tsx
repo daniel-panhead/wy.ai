@@ -10,7 +10,7 @@ const Guiding = () => {
     size.width;
 
   const targetDeg = 48;
-  const diff = ahrs ? targetDeg - ahrs.heading : 0
+  const diff = ahrs ? targetDeg - (ahrs.heading * (180 / Math.PI)) : 0
 
   return (
     <div className="w-full h-full bg-black">
