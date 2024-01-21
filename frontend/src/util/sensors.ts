@@ -6,6 +6,22 @@ export const getAccelPermission = async () => {
   return await navigator.permissions.query({ name: 'accelerometer' })
 }
 
+const getMagnetPermission = async () => {
+  // @ts-expect-error 'accelerometer' is a correct query for modern chrome
+  return await navigator.permissions.query({ name: 'magnetometer' })
+}
+
+const getAccelMagnetPermission = async () => {
+  const accelPerms = await getAccelPermission()
+  if (accelPerms.state !== "granted") {
+    console.log("Failed to get accelerometer permissions")
+    return accelPerms
+  } else {
+    return await getMagnetPermission()
+  }
+  
+}
+
 export const useAccel = () => {
   const [accel, setAccel] = useState<{ x: number, y: number, z: number } | null>()
 
@@ -70,7 +86,7 @@ export const useAhrs = () => {
   const [mData, setMData] = useState<[number, number, number] | []>([])
 
   useEffect(() => {
-    getAccelPermission().then((res) => {
+    getAccelMagnetPermission().then((res) => {
       if (res.state === "granted") {
         const madgwick = new AHRS({
           /*
@@ -115,6 +131,7 @@ export const useAhrs = () => {
 
         const makeReadingHandler = (setData, acl: Gyroscope|Accelerometer|Magnetometer) => {
           return () => {
+            console.log(acl)
             setData([acl.x, acl.y, acl.z])
           }
         }
@@ -131,9 +148,6 @@ export const useAhrs = () => {
   }, [])
 
   useEffect(() => {
-    console.log(gData)
-    console.log(aData)
-    console.log(mData)
     if (!madgwick || gData.length == 0 || aData.length == 0) return
     madgwick.update(...gData, ...aData, ...mData)
     setEulerAngles(madgwick.getEulerAngles())
