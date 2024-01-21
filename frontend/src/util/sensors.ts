@@ -135,8 +135,7 @@ export const useAhrs = () => {
 
           const makeReadingHandler = (setData, acl: Gyroscope|Accelerometer|Magnetometer) => {
             return () => {
-              console.log(acl)
-              setData({x: acl.x, y: acl.y, z: acl.z})
+              setData([acl.x, acl.y, acl.z])
             }
           }
           
