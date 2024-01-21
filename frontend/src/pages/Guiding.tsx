@@ -1,8 +1,8 @@
 import Webcam from "react-webcam";
-import { useMagnet } from "../util/sensors";
+import { useAhrs } from "../util/sensors";
 
 const Guiding = () => {
-  const magnet = useMagnet();
+  const ahrs = useAhrs();
   const size = { height: window.innerHeight, width: window.innerWidth }
 
   const isLandscape = size.height <= size.width;
@@ -14,8 +14,8 @@ const Guiding = () => {
       <div className="absolute z-10 w-full p-6 opacity-60">
         <div className="flex flex-col items-center gap-2">
           <span className="font-extrabold text-light-light-green text-center text-lg">NAVIGATE TO YOUR FRIEND!</span>
-          <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? magnet.x.toFixed(2) : ''} {magnet ? magnet.y.toFixed(2) : ''} {magnet ? magnet.z.toFixed(2) : ''}</span>
-          <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? (Math.atan2(magnet.y, magnet.x) * (180/Math.PI)).toFixed(2) : ''}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">heading: {ahrs.heading}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">pitch: {ahrs.pitch}</span>
 
         </div>
       </div>
