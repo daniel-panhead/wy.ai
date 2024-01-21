@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "/capture-corner/*"
+  to = "https://back-end-n6tj6r67ea-uw.a.run.app/*"
+  status = 200
+  headers = {X-From = "Netlify"}
+
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"

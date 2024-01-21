@@ -4,6 +4,8 @@ from locator import base_distance
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 
 class Angle(BaseModel):
@@ -30,11 +32,11 @@ app.add_middleware(
 
 @app.get("/")
 def Home():
-    return {"Home": "is where rey poops"}
+    return JSONResponse(content=jsonable_encoder({"Home": "is where rey poops"}))
 
 @app.get("/hello")
 def greetings():
-    return {"Hello": "World"}
+    return JSONResponse(content=jsonable_encoder({"Hello": "Rey"}))
 
 
 @app.post("/coords")
@@ -53,5 +55,5 @@ async def coords(angles: Angle):
     if (angles.role == "parent"):
         return_obj["child"] = current_child["child"]
 
-    return return_obj
+    return JSONResponse(content=jsonable_encoder(return_obj))
 
