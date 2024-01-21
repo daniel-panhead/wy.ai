@@ -1,5 +1,3 @@
-import math
-
 x_length = 140
 y_length = 58
 

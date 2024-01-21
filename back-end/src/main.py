@@ -1,7 +1,12 @@
 from typing import Union
 from locator import xy_plane as plane
+from locator import base_distance
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
+
+class Angle(BaseModel):
+    angles: list
 
 app = FastAPI()
 
@@ -14,9 +19,13 @@ def greetings():
     return {"Hello": "World"}
 
 
-@app.get("/coords")
-def coords():
-    lengthx = plane.q2_xaxis_length(1,2)
-    lengthy = plane.q1_yaxis_length(1,4)
+@app.post("/coords")
+async def coords(angles: Angle):
+    d1 = base_distance.base_distance(angles.angles[0])
+    d2 = base_distance.base_distance(angles.angles[1])
+    d3 = base_distance.base_distance(angles.angles[2])
+    lengthx = plane.q2_xaxis_length(d1,d2)
+    lengthy = plane.q1_yaxis_length(d1,d3)
+
     return {"x" : plane.x_coord(lengthx), "y" : plane.y_coord(lengthy)}
 
