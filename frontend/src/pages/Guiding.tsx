@@ -14,9 +14,8 @@ const Guiding = () => {
       <div className="absolute z-10 w-full p-6 opacity-60">
         <div className="flex flex-col items-center gap-2">
           <span className="font-extrabold text-light-light-green text-center text-lg">NAVIGATE TO YOUR FRIEND!</span>
-          <span className="font-extrabold text-light-light-green text-center text-lg">{ahrs ? ahrs.heading : ''}</span>
-          {/* <span className="font-extrabold text-light-light-green text-center text-lg">heading: {ahrs ? ahrs.heading : ''}</span> */}
-          {/* <span className="font-extrabold text-light-light-green text-center text-lg">pitch: {ahrs ? ahrs.pitch : ''}</span> */}
+          <span className="font-extrabold text-light-light-green text-center text-lg">heading: {ahrs ? ahrs.heading : ''}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">pitch: {ahrs ? ahrs.pitch : ''}</span>
 
         </div>
       </div>
