@@ -7,3 +7,7 @@ html {
   @apply bg-light-light-green;
   font-family: 'Sora', sans-serif;
 }
+
+html, body, #root {
+  @apply h-[100dvh];
+}
