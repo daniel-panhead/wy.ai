@@ -34,6 +34,10 @@ const CaptureCorner = () => {
     })
   }, [])
 
+  useEffect(() => {
+    console.log(accel)
+  }, [accel])
+
   const size = {height: window.innerHeight, width: window.innerWidth}
 
   const isLandscape = size.height <= size.width;
