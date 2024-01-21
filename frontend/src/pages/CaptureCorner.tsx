@@ -35,7 +35,9 @@ const CaptureCorner = () => {
   const navigate = useNavigate();
   const accel = useAccel();
 
-  const capture = (angle) => {
+  const capture = (accel) => {
+    let angle = Math.acos(9.8/accel.x)
+
     sessionStorage.setItem(id, String(angle))
     if (Number(id) == 2) {
       findDistance()
