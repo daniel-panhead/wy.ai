@@ -6,6 +6,7 @@ from fastapi import FastAPI, Request
 from pydantic import BaseModel
 
 class Angle(BaseModel):
+    room: str
     angles: list
 
 app = FastAPI()
@@ -21,11 +22,12 @@ def greetings():
 
 @app.post("/coords")
 async def coords(angles: Angle):
+
     d1 = base_distance.base_distance(angles.angles[0])
     d2 = base_distance.base_distance(angles.angles[1])
     d3 = base_distance.base_distance(angles.angles[2])
     lengthx = plane.q2_xaxis_length(d1,d2)
     lengthy = plane.q1_yaxis_length(d1,d3)
 
-    return {"x" : plane.x_coord(lengthx), "y" : plane.y_coord(lengthy)}
+    return {"room" : angles.room, "x" : plane.x_coord(lengthx), "y" : plane.y_coord(lengthy)}
 
