@@ -8,6 +8,7 @@ import Home from './pages/Home.tsx'
 import RoleSelector from './pages/Role_Selector.tsx';
 import SignIn from './pages/SignIn_Page.tsx';
 import Camera from './pages/Camera.tsx'
+import Success from './pages/success.tsx'
 import './index.css'
 import CaptureCorner from './pages/CaptureCorner.tsx';
 import Guiding from './pages/Guiding.tsx';
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
     element: <Guiding />,
   },
   
+  {
+    path: "/success",
+    element: <Success />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

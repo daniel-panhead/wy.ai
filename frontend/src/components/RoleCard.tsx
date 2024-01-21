@@ -22,7 +22,7 @@ const RoleCard = ({ role, className }) => {
         <div className={roleMap[role].style + 
             " w-[16.25rem] h-[21.125rem] flex flex-col justify-center items-center gap-y-[0.625rem] \
                 rounded-2xl border-4 border-[#305F56] " + className}
-                onClick={() => {sessionStorage.setItem('role', role); navigate("/capture-corner")}}>
+                onClick={() => {sessionStorage.setItem('role', role); navigate("/capture-corner/0")}}>
             <img src={roleMap[role].logo} />
             <h2 className="text-4xl text-center font-bold"> { roleMap[role].role } </h2>
             <p> {roleMap[role].tagline} </p>

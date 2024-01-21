@@ -1,11 +1,48 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import { useAccel } from "../util/sensors";
 import { useEffect } from "react";
 
+const findDistance = async () => {
+    // Assuming that role, location, and angle are already stored in the session  
+    // the array of angles should be stringified
+    sessionStorage.setItem('role', "parent") // Temporary
+    sessionStorage.setItem('room', "West Wing")
+
+    let floatAngles = []
+    for (let i = 0; i < 3; i++) {
+      floatAngles.push(parseFloat(sessionStorage.getItem(String(i))))
+    }
+
+    let res = await fetch("http://localhost:8000/coords", {
+        method : "POST",
+        mode : "cors",
+        body : JSON.stringify({
+            role : sessionStorage.getItem("role"),
+            room : sessionStorage.getItem("room"),
+            angles : floatAngles
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+
+    console.log(await res.json())
+}
+
 const CaptureCorner = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const accel = useAccel();
+
+  const capture = (accel) => {
+    let angle = Math.acos(9.8/accel.x)
+
+    sessionStorage.setItem(id, String(angle))
+    if (Number(id) == 2) {
+      findDistance()
+    }
+  }
 
   useEffect(() => {
     console.log(accel)
@@ -30,7 +67,8 @@ const CaptureCorner = () => {
       <div className="absolute w-full bottom-16">
         <div className="flex justify-center">
           <div className="bg-light-light-green rounded-full">
-            <button className="rounded-full w-20 h-20 border-black border-4 border-double active:opacity-80"></button>
+            <button className="rounded-full w-20 h-20 border-black border-4 border-double active:opacity-80"
+              onClick={() => { capture(accel); navigate("/capture-corner/" + (Number(id) < 2 ? Number(id) + 1 : 0))}}></button>
           </div>
         </div>
       </div>
