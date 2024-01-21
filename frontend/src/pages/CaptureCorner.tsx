@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const CaptureCorner = () => {
   const { id } = useParams();
-  const [accel, setAccel] = useState<Accelerometer>()
+  const [accel, setAccel] = useState<{ x: number, y: number, z: number }|null>()
 
   useEffect(() => {
 
@@ -14,8 +14,7 @@ const CaptureCorner = () => {
         const acl = new Accelerometer({ frequency: 60 });
 
         const handleReading = () => {
-          // @ts-expect-error go away man
-          setAccel((prev) => acl)
+          setAccel({x: acl.x, y: acl.y, z: acl.z})
 
           // console.log(`Acceleration along the X-axis ${acl.x}`);
           // console.log(`Acceleration along the Y-axis ${acl.y}`);
