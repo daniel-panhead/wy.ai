@@ -27,7 +27,14 @@ const findDistance = async () => {
         }
     })
 
+    // let res = await fetch("http://localhost:8000")
+
     console.log(await res.json())
+}
+
+const test =async () => {
+  let res = await fetch("http://localhost:8000/") 
+  console.log(await res.json())
 }
 
 const CaptureCorner = () => {
@@ -36,11 +43,14 @@ const CaptureCorner = () => {
   const accel = useAccel();
 
   const capture = (accel) => {
-    let angle = Math.acos(9.8/accel.x)
+    let angle = accel != null ? Math.acos(9.8/accel.x) : 0
+    console.log(angle)
 
     sessionStorage.setItem(id, String(angle))
-    if (Number(id) == 2) {
+    if (Number(id) == 2 && angle != 0) {
       findDistance()
+    } else if (angle == 0) {
+      test()
     }
   }
 
