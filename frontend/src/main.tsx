@@ -7,6 +7,7 @@ import {
 import Home from './pages/Home.tsx'
 import RoleSelector from './pages/Role_Selector.tsx';
 import './index.css'
+import CaptureCorner from './pages/CaptureCorner.tsx';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,10 @@ const router = createBrowserRouter([
     path: "/select-role",
     element: <RoleSelector />,
   },
-  
+  {
+    path: "/capture-corner/:id",
+    element: <CaptureCorner />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
