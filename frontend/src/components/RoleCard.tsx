@@ -1,7 +1,7 @@
 import parentLogo from "../assets/parent.png"
 import childLogo from "../assets/child.png"
 
-const RoleCard = ({ role }) => {
+const RoleCard = ({ role, className }) => {
     const roleMap = {
         parent : {
             style : "bg-[#CFDED2]",
@@ -19,7 +19,7 @@ const RoleCard = ({ role }) => {
     return (
         <div className={roleMap[role].style + 
             " w-[16.25rem] h-[21.125rem] flex flex-col justify-center items-center gap-y-[0.625rem] \
-                rounded-2xl border-4 border-[#305F56]"}>
+                rounded-2xl border-4 border-[#305F56] " + className}>
             <img src={roleMap[role].logo} />
             <h2 className="text-4xl text-center font-bold"> { roleMap[role].role } </h2>
             <p> {roleMap[role].tagline} </p>
