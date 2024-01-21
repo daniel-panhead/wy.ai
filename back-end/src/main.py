@@ -1,13 +1,15 @@
 from typing import Union
+from locator import xy_plane
 
 from fastapi import FastAPI
 
 app = FastAPI()
 
 @app.get("/")
-def read_root():
-    return {"Home": "is where rey is"}
+def Home():
+    xy_plane.poop()
+    return {"Home": "is where rey poops"}
 
 @app.get("/hello")
-def read_root():
+def greetings():
     return {"Hello": "World"}
