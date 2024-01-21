@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react"
 import AHRS from 'ahrs'
 // import AHRS from 'ahrs/build/www-ahrs.js'
@@ -82,17 +81,18 @@ export const useAccel = () => {
 
 export const useAhrs = () => {
   const permsGranted = useRef(false)
-  const [eulerAngles, setEulerAngles] = useState<{ heading: number; pitch: number; roll: number; }>()
-  const [madgwick, setMadgwick] = useState<AHRS>()
-  const [gData, setGData] = useState<[number, number, number] | []>([])
+  // const [eulerAngles, setEulerAngles] = useState<{ heading: number; pitch: number; roll: number; }>()
+  // const [madgwick, setMadgwick] = useState<AHRS>()
+  // const [gData, setGData] = useState<[number, number, number] | []>([])
   const [aData, setAData] = useState<[number, number, number] | []>([])
-  const [mData, setMData] = useState<[number, number, number] | []>([])
+  // const [mData, setMData] = useState<[number, number, number] | []>([])
 
   useEffect(() => {
     if (!permsGranted.current) {
       getAccelMagnetPermission().then((res) => {
         if (res.state === "granted") {
           permsGranted.current = true
+          // @ts-expect-error shut up
           const madgwick = new AHRS({
             /*
             * The sample interval, in Hz.
@@ -132,7 +132,7 @@ export const useAhrs = () => {
             doInitialisation: false,
           });
 
-          setMadgwick(madgwick)
+          // setMadgwick(madgwick)
 
           const makeReadingHandler = (setData, acl: Gyroscope|Accelerometer|Magnetometer) => {
             return () => {
