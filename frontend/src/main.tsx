@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Home from './pages/Home.tsx'
+import RoleSelector from './pages/Role_Selector.tsx';
 import './index.css'
 
 const router = createBrowserRouter([
@@ -12,6 +13,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
   },
+  {
+    path: "/select-role",
+    element: <RoleSelector />,
+  },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
