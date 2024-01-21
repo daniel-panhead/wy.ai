@@ -9,6 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     const asyncFunc = async () => {
+      //@ts-expect-error it's fine ok
       const accel = await navigator.permissions.query({ name: 'accelerometer' })
       setAccelPerm(accel);
     };
