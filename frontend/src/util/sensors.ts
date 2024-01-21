@@ -51,45 +51,39 @@ export const useAccel = () => {
   return accel
 }
 
-// export const useMagnet = () => {
-//   const [magnet, setMagnet] = useState<{ x: number, y: number, z: number } | null>()
 
-//   useEffect(() => {
-//     getAccelPermission().then((res) => {
-//       if (res.state === "granted") {
-//         const acl = new Magnetometer({ frequency: 60 });
+const smooth = (values: number[], alpha) => {
+  const weighted = average(values) * alpha;
+  let smoothed: number[] = [];
+  for (const i of values) {
+    const curr = values[i];
+    const prev = smoothed[i - 1] || values[values.length - 1];
+    const next = curr || values[0];
+    const improved = Number(average([weighted, prev, curr, next]).toFixed(2));
+    smoothed.push(improved);
+  }
+  return smoothed;
+}
 
-//         const handleReading = () => {
-//           setMagnet({ x: acl.x, y: acl.y, z: acl.z })
-//         }
-
-//         acl.addEventListener("reading", handleReading);
-
-//         acl.start();
-
-//         return () => {
-//           acl.removeEventListener("reading", handleReading)
-//         }
-//       } else {
-//         setMagnet(null)
-//       }
-//     })
-//   }, [])
-
-//   return magnet
-// }
+const average = (data) => {
+  const sum = data.reduce(function (sum, value) {
+    return sum + value;
+  }, 0);
+  const avg = sum / data.length;
+  return avg;
+}
 
 export const useAhrs = () => {
   const permsGranted = useRef(false)
   const [eulerAngles, setEulerAngles] = useState<{ heading: number; pitch: number; roll: number; }>()
   const [madgwick, setMadgwick] = useState<AHRS>()
-  const [gData, setGData] = useState<[number, number, number] | []>([])
-  const [aData, setAData] = useState<[number, number, number] | []>([])
-  const [mData, setMData] = useState<[number, number, number] | []>([])
+  const [gData, setGData] = useState<[number[], number[], number[]]>([[], [], []])
+  const [aData, setAData] = useState<[number[], number[], number[]]>([[], [], []])
+  const [mData, setMData] = useState<[number[], number[], number[]]>([[], [], []])
 
   useEffect(() => {
     if (!permsGranted.current) {
-      getAccelPermission().then((res) => {
+      getAccelMagnetPermission().then((res) => {
         if (res.state === "granted") {
           permsGranted.current = true
           const madgwick = new AHRS({
@@ -133,10 +127,14 @@ export const useAhrs = () => {
 
           setMadgwick(madgwick)
 
-          const makeReadingHandler = (setData, acl: Gyroscope|Accelerometer|Magnetometer) => {
+          const makeReadingHandler = (setData: (value: React.SetStateAction<[number[], number[], number[]] | []>) => void, acl: Gyroscope|Accelerometer|Magnetometer) => {
             return () => {
-              setData([acl.x, acl.y, acl.z])
+              setData((prev) => [[...prev[0], acl.x], [...prev[1], acl.y], [...prev[2], acl.z]])
             }
+          }
+
+          const aReadingHandler = () => {
+            setAData((prev) => [[...prev[0], aAcl.x / 9.81], [...prev[1], aAcl.y / 9.81], [...prev[2], aAcl.z / 9.81]])
           }
           
           const gAcl = new Gyroscope({ frequency: 60 })
@@ -144,7 +142,7 @@ export const useAhrs = () => {
           const mAcl = new Magnetometer({ frequency: 10 })
 
           const gReadHandler = makeReadingHandler(setGData, gAcl)
-          const aReadHandler = makeReadingHandler(arr => setAData(arr.map(el => el / 9.81)), aAcl)
+          const aReadHandler = aReadingHandler;
           const mReadHandler = makeReadingHandler(setMData, mAcl)
           
           gAcl.addEventListener("reading", gReadHandler);
@@ -167,9 +165,14 @@ export const useAhrs = () => {
   }, [])
 
   useEffect(() => {
-    if (!madgwick || gData.length == 0 || aData.length == 0) return
+    if (!madgwick || gData[0].length < 10 || aData[0].length < 10) return
     console.log(gData)
-    madgwick.update(...gData, ...aData, ...mData)
+
+    const avgG = gData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
+    const avgA = aData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
+    const avgM = mData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
+    // @ts-expect-error it's fine
+    madgwick.update(...avgG, ...avgA, ...avgM)
     setEulerAngles(madgwick.getEulerAngles())
   }, [madgwick, gData, aData, mData])
 
