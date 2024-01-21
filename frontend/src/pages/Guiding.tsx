@@ -1,6 +1,8 @@
 import Webcam from "react-webcam";
-const Guiding = () => {
+import { useMagnet } from "../util/sensors";
 
+const Guiding = () => {
+  const magnet = useMagnet();
   const size = { height: window.innerHeight, width: window.innerWidth }
 
   const isLandscape = size.height <= size.width;
@@ -12,6 +14,7 @@ const Guiding = () => {
       <div className="absolute z-10 w-full p-6 opacity-60">
         <div className="flex flex-col items-center gap-2">
           <span className="font-extrabold text-light-light-green text-center text-lg">NAVIGATE TO YOUR FRIEND!</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? magnet.x : ''} {magnet ? magnet.y : ''} {magnet ? magnet.z : ''}</span>
         </div>
       </div>
       <Webcam width={size.width} height={size.height} videoConstraints={{ aspectRatio: ratio }} />

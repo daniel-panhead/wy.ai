@@ -32,3 +32,31 @@ export const useAccel = () => {
   
   return accel
 }
+
+export const useMagnet = () => {
+  const [magnet, setMagnet] = useState<{ x: number, y: number, z: number } | null>()
+
+  useEffect(() => {
+    getAccelPermission().then((res) => {
+      if (res.state === "granted") {
+        const acl = new Magnetometer({ frequency: 60 });
+
+        const handleReading = () => {
+          setMagnet({ x: acl.x, y: acl.y, z: acl.z })
+        }
+
+        acl.addEventListener("reading", handleReading);
+
+        acl.start();
+
+        return () => {
+          acl.removeEventListener("reading", handleReading)
+        }
+      } else {
+        setMagnet(null)
+      }
+    })
+  }, [])
+
+  return magnet
+}
