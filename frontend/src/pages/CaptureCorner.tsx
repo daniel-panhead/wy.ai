@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 
 const CaptureCorner = () => {
   const { id } = useParams();
-  const [accel, setAccel] = useState()
+  const [accel, setAccel] = useState<Accelerometer>()
 
   useEffect(() => {
 
     getAccelPermission().then((res) => {
       if (res.state === "granted") {
-        // @ts-expect-error object exists in JS Web API
         const acl = new Accelerometer({ frequency: 60 });
 
         const handleReading = () => {
@@ -28,7 +27,7 @@ const CaptureCorner = () => {
         acl.start();
 
         return () => {
-          acl.removeEventListenenr("reading", handleReading)
+          acl.removeEventListener("reading", handleReading)
         }
       } else {
         setAccel(null)
@@ -52,10 +51,7 @@ const CaptureCorner = () => {
         <div className="flex flex-col items-center gap-2">
           <span className="font-extrabold text-light-light-green text-center text-lg">CAPTURE CORNER {id}</span>
           <span className="text-center text-light-light-green text-lg">Line up the corner with the glowing dot in the center!</span>
-          {
-            // @ts-expect-error literally not an issue
-            <span className="text-center text-light-light-green text-lg font-semibold">{accel ? accel.x.toFixed(2) : ''} {accel ? accel.y.toFixed(2) : ''} {accel ? accel.z.toFixed(2) : accel}</span>
-          }
+          <span className="text-center text-light-light-green text-lg font-semibold">{accel ? accel.x.toFixed(2) : ''} {accel ? accel.y.toFixed(2) : ''} {accel ? accel.z.toFixed(2) : ''}</span>
         </div>
       </div>
       <Webcam width={size.width} height={size.height} videoConstraints={{aspectRatio: ratio}} />
