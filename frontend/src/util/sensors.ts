@@ -165,8 +165,8 @@ export const useAhrs = () => {
   }, [])
 
   useEffect(() => {
-    if (!madgwick || gData[0].length < 10 || aData[0].length < 10) return
     console.log(gData)
+    if (!madgwick || gData[0].length < 10 || aData[0].length < 10) return
 
     const avgG = gData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
     const avgA = aData.map((axisArr) => smooth(axisArr, 0.85).reduce((prev, curr) => prev += curr) / axisArr.length)
