@@ -128,7 +128,7 @@ export const useAhrs = () => {
         addEventListener("reading", makeReadingHandler(setMData, mAcl));
       }
     })
-  })
+  }, [])
 
   useEffect(() => {
     console.log(gData)
