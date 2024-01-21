@@ -10,6 +10,7 @@ import SignIn from './pages/SignIn_Page.tsx';
 import Camera from './pages/Camera.tsx'
 import './index.css'
 import CaptureCorner from './pages/CaptureCorner.tsx';
+import Guiding from './pages/Guiding.tsx';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/capture-corner",
     element: <Camera />,
+  },
+  {
+    path: "/guiding",
+    element: <Guiding />,
   },
   
 ]);

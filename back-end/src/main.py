@@ -11,6 +11,7 @@ class Angle(BaseModel):
     angles: list
 
 app = FastAPI()
+current_child = {}
 
 @app.get("/")
 def Home():
@@ -29,6 +30,14 @@ async def coords(angles: Angle):
     d3 = base_distance.base_distance(angles.angles[2])
     lengthx = plane.q2_xaxis_length(d1,d2)
     lengthy = plane.q1_yaxis_length(d1,d3)
+    
+    return_obj = {}
+    return_obj[angles.role] = {"room" : angles.room, "role" : angles.role, "x" : plane.x_coord(lengthx), "y" : plane.y_coord(lengthy)}
 
-    return {"room" : angles.room, "role" : angles.role, "x" : plane.x_coord(lengthx), "y" : plane.y_coord(lengthy)}
+    if (angles.role == "child"):
+        current_child["child"] = return_obj["child"]
+    if (angles.role == "parent"):
+        return_obj["child"] = current_child["child"]
+
+    return return_obj
 
