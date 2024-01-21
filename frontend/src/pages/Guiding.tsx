@@ -14,7 +14,9 @@ const Guiding = () => {
       <div className="absolute z-10 w-full p-6 opacity-60">
         <div className="flex flex-col items-center gap-2">
           <span className="font-extrabold text-light-light-green text-center text-lg">NAVIGATE TO YOUR FRIEND!</span>
-          <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? magnet.x : ''} {magnet ? magnet.y : ''} {magnet ? magnet.z : ''}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? magnet.x.toFixed(2) : ''} {magnet ? magnet.y.toFixed(2) : ''} {magnet ? magnet.z.toFixed(2) : ''}</span>
+          <span className="font-extrabold text-light-light-green text-center text-lg">{magnet ? Math.atan2(magnet.y, magnet.x) : ''}</span>
+
         </div>
       </div>
       <Webcam width={size.width} height={size.height} videoConstraints={{ aspectRatio: ratio }} />
