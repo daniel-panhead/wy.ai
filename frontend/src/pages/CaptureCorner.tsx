@@ -33,7 +33,7 @@ const findDistance = async () => {
 }
 
 const test =async () => {
-  let res = await fetch("http://localhost:8000/") 
+  let res = await fetch("https://back-end-n6tj6r67ea-uw.a.run.app") 
   console.log(await res.json())
 }
 
