@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import AHRS from 'ahrs'
+// import AHRS from 'ahrs/build/www-ahrs.js'
 
 export const getAccelPermission = async () => {
   // @ts-expect-error 'accelerometer' is a correct query for modern chrome
@@ -144,6 +145,10 @@ export const useAhrs = () => {
         addEventListener("reading", makeReadingHandler(setGData, gAcl));
         addEventListener("reading", makeReadingHandler(setAData, aAcl));
         addEventListener("reading", makeReadingHandler(setMData, mAcl));
+
+        gAcl.start()
+        aAcl.start()
+        mAcl.start()
         console.log("done init")
       }
     })
