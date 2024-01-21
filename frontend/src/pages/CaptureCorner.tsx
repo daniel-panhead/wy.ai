@@ -1,10 +1,15 @@
 import { useParams } from "react-router-dom";
 import Webcam from "react-webcam";
 import { useAccel } from "../hooks/sensors";
+import { useEffect } from "react";
 
 const CaptureCorner = () => {
   const { id } = useParams();
   const accel = useAccel();
+
+  useEffect(() => {
+    console.log(accel)
+  }, [accel])
 
   const size = {height: window.innerHeight, width: window.innerWidth}
 
